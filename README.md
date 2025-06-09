@@ -1,13 +1,13 @@
 # Chatter
 
-Codi inicial del projecte Chatter.
+Project Chatter.
 
-Per iniciar-lo, primer instal·la els paquest necessaris:
+For deployment, install dependencies:
 
     npm install
 
-I desprès executa:
+And then run:
 
     npm start
 
-I entra a http://127.0.0.1:3000/
+Finally, open this url --> http://127.0.0.1:3000/
