@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto mt-10">
+  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <!-- Capçalera amb títol i accions -->
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="text-gray-700 font-bold text-2xl">Detall de la Bio</h1>
+      <div class="flex space-x-2">
+        <a href="/bios/update/{{ bio.id }}">
+          <button class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded">
+            Edita
+          </button>
+        </a>
+        <form action="/bios/delete/{{ bio.id }}?_method=DELETE" method="post" onsubmit="return confirm('Estàs segur que vols esborrar aquesta bio?')">
+          <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Esborra
+          </button>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Camps de la Bio -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold">Nom:</label>
+      <p>{{ bio.nom }}</p>
+    </div>
+    
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold">URL:</label>
+      <p><a href="{{ bio.url }}" class="text-blue-500 hover:underline">{{ bio.url }}</a></p>
+    </div>
+    
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold">Autor:</label>
+      <p>{{ bio.autor.nom }} {{ bio.autor.cognoms }} (<a href="mailto:{{ bio.autor.email }}" class="text-blue-500 hover:underline">{{ bio.autor.email }}</a>)</p>
+    </div>
+    
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold">Tags:</label>
+      {% if bio.tags and bio.tags|length > 0 %}
+        <p>{{ bio.tags | join(', ') }}</p>
+      {% else %}
+        <p>Cap tag</p>
+      {% endif %}
+    </div>
+    
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold">Imatges:</label>
+      <div class="flex space-x-4">
+        {% if bio.imatges and bio.imatges.length > 0 %}
+          {% for imatge in bio.imatges %}
+            <img class="w-24 h-24 object-cover rounded" src="{{ imatge }}" alt="Imatge de la bio">
+          {% endfor %}
+        {% else %}
+          <p>No hi ha imatges.</p>
+        {% endif %}
+      </div>
+    </div>
+    
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold">Creat a:</label>
+      <p>{{ bio.createdAt }}</p>
+    </div>
+    
+    <div>
+      <label class="block text-gray-700 font-bold">Actualitzat a:</label>
+      <p>{{ bio.updatedAt }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <header>
+    <nav class="bg-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <a href="/" class="text-white font-bold text-xl">Chatter</a>
+            <div class="ml-5">
+              <a href="/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+              <a href="/dashboard" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+              <a href="/users/list" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Users</a>        
+              <a href="/admins" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Admins</a>        
+            </div>
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-4">
+              <p class="text-white">{{user.email}}</p>
+              {% if user %}
+                <button class="bg-purple-800 py-2 rounded-md hover:bg-purple-900">
+                  <a href="/auth/logout" class="text-white px-3 py-2 rounded-md text-sm font-medium">Log out</a>
+                </button>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <body class="bg-gray-100">
+
+    {% include 'flash.html' %}
+
+    {% block content %}{% endblock %}
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+          const flashMessages = document.querySelectorAll('.flash-message');
+          flashMessages.forEach(msg => {
+            msg.classList.add('fade-out');
+            setTimeout(() => {
+              msg.remove();
+            }, 1000);
+          });
+        }, 6000);
+      });
+    </script>   
+  </body>
+  <footer class="bg-gray-800 text-white py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-sm">&copy; 2025 Chatter. All rights reserved.</p>
+        <div class="mt-2 md:mt-0 space-x-4">
+          <a href="/privacy" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+          <a href="/terms" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</html>

@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 sm:px-8 py-9">
+  <h1 class="text-2xl font-bold mb-1">Bios</h1>
+  <div class="py-2 overflow-x-auto">
+    <div class="min-w-full shadow overflow-x-scroll rounded-lg border-b border-gray-200">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-300">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                Name
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                Autor
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                Avatar(s)
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                Created at
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          {% for bio in bios %}
+          <tr>
+            <td class="truncate max-w-[100px] px-6 py-4 whitespace-nowrap">
+                <a href="{{ bio.url }}">{{ bio.nom }}</a>
+            </td>
+            <td class="truncate max-w-[50px] px-6 py-4 whitespace-nowrap">
+                {{ bio.autor.nom }}
+            </td>
+            <td class="truncate max-w-[50px] px-6 py-4 whitespace-nowrap">
+              <img class="w-12 h-12 object-cover" 
+              src="{% if bio.avatarsReal %}data:image/png;base64,{{ bio.avatarsReal[0] }}{% else %}/media/default.png{% endif %}" 
+              alt="User Avatar"/>
+            </td>
+            <td class="truncate max-w-[100px] px-6 py-4 whitespace-nowrap">
+                {{ bio.createdAt }}
+            </td>
+            <td class="truncate max-w-[150px] px-2 py-4 whitespace-nowrap flex items-center space-x-2">
+              <a href="list/{{ bio.id }}">
+                <button>
+                  <svg xmlns="http://www.w3.org/2000/svg" 
+                      class="w-6 h-6 fill-current text-blue-500 hover:text-blue-700 transition-colors mt-3"
+                      viewBox="0 0 50 50">
+                    <path d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z"></path>
+                  </svg>
+                </button>
+              </a>  
+            
+              <a href="update/{{ bio.id }}">
+                <button>
+                  <svg xmlns="http://www.w3.org/2000/svg" 
+                      class="w-6 h-6 fill-current text-orange-500 hover:text-orange-700 transition-colors mt-3"
+                      viewBox="0 0 256 256">
+                    <g fill-rule="nonzero" stroke="none">
+                      <g transform="scale(8.53333,8.53333)">
+                        <path d="M22.82813,3c-0.51175,0 -1.02356,0.19544 -1.41406,0.58594l-2.41406,2.41406l5,5l2.41406,-2.41406c0.781,-0.781 0.781,-2.04713 0,-2.82812l-2.17187,-2.17187c-0.3905,-0.3905 -0.90231,-0.58594 -1.41406,-0.58594zM17,8l-11.74023,11.74023c0,0 0.91777,-0.08223 1.25977,0.25977c0.342,0.342 0.06047,2.58 0.48047,3c0.42,0.42 2.64389,0.12436 2.96289,0.44336c0.319,0.319 0.29688,1.29688 0.29688,1.29688l11.74023,-11.74023zM4,23l-0.94336,2.67188c-0.03709,0.10544 -0.05623,0.21635 -0.05664,0.32813c0,0.55228 0.44772,1 1,1c0.11177,-0.00041 0.22268,-0.01956 0.32813,-0.05664c0.00326,-0.00128 0.00652,-0.00259 0.00977,-0.00391l0.02539,-0.00781c0.00196,-0.0013 0.00391,-0.0026 0.00586,-0.00391l2.63086,-0.92773l-1.5,-1.5z"></path>
+                      </g>
+                    </g>
+                  </svg>
+                </button>
+              </a>
+            
+              <form action="delete/{{ bio.id }}?_method=DELETE" method="post" onsubmit="return confirm('Are you sure?')">
+                <button type="submit">
+                  <svg xmlns="http://www.w3.org/2000/svg" 
+                      class="w-6 h-6 fill-current text-red-600 hover:text-red-800 transition-colors mt-3"
+                      viewBox="0 0 30 30">
+                    <path d="M 13 3 A 1.0001 1.0001 0 0 0 11.986328 4 L 6 4 A 1.0001 1.0001 0 1 0 6 6 L 24 6 A 1.0001 1.0001 0 1 0 24 4 L 18.013672 4 A 1.0001 1.0001 0 0 0 17 3 L 13 3 z M 6 8 L 6 24 C 6 25.105 6.895 26 8 26 L 22 26 C 23.105 26 24 25.105 24 24 L 24 8 L 6 8 z"></path>
+                  </svg>
+                </button>
+              </form>
+            </td>
+            
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="9" class="px-6 py-4 whitespace-nowrap text-center">
+              There are no users to be shown.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="mt-8 flex justify-center space-x-2">
+      {% if page > 0 %}
+        <a href="?page={{ page - 1 }}" class="px-3 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Previous</a>
+      {% endif %}
+      {% for i in range(0, totalPages) %}
+        {% if i == page %}
+          <span class="px-3 py-1 bg-gray-700 text-white rounded">{{ i + 1 }}</span>
+        {% else %}
+          <a href="?page={{ i }}" class="px-3 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">{{ i + 1 }}</a>
+        {% endif %}
+      {% endfor %}
+      {% if page < totalPages - 1 %}
+        <a href="?page={{ page + 1 }}" class="px-3 py-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Next</a>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+{% endblock %}

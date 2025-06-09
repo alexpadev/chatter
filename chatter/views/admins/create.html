@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="max-w-lg mx-auto mt-10">
+  <form method="POST" action="/admins/create" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <p class="text-gray-700 font-bold text-xl mb-4">Register New Admin</p>
+    
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
+      <input id="email" name="email" type="email" placeholder="Enter email" class="shadow border rounded w-full py-2 px-3 text-gray-700">
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="emailConfirm">Confirm Email</label>
+      <input id="emailConfirm" name="emailConfirm" type="email" placeholder="Confirm email" class="shadow border rounded w-full py-2 px-3 text-gray-700">
+    </div>
+    
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="contrasenya">Password</label>
+      <input id="contrasenya" name="contrasenya" type="password" placeholder="Enter password" class="shadow border rounded w-full py-2 px-3 text-gray-700">
+    </div>
+
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="contrasenyaConfirm">Confirm Password</label>
+      <input id="contrasenyaConfirm" name="contrasenyaConfirm" type="password" placeholder="Confirm password" class="shadow border rounded w-full py-2 px-3 text-gray-700">
+    </div>
+    
+    <div class="flex items-center justify-center">
+      <button type="submit" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded">
+        Register
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

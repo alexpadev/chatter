@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto mt-10">
+  <form method="POST" action="/bios/update/{{ bio.id }}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <h1 class="text-gray-700 font-bold text-2xl mb-6">Actualitza la Bio</h1>
+    
+    <!-- Camp per al nom -->
+    <div class="mb-4">
+      <label for="nom" class="block text-gray-700 font-bold mb-2">Nom:</label>
+      <input id="nom" name="nom" type="text" value="{{ bio.nom }}" class="shadow border rounded w-full py-2 px-3 text-gray-700" required>
+    </div>
+    
+    <!-- Camp per a la URL -->
+    <div class="mb-4">
+      <label for="url" class="block text-gray-700 font-bold mb-2">URL:</label>
+      <input id="url" name="url" type="text" value="{{ bio.url }}" class="shadow border rounded w-full py-2 px-3 text-gray-700" required>
+    </div>
+    
+    <!-- Informació de l'autor (no modificable) -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold mb-2">Autor:</label>
+      <p class="py-2 px-3 bg-gray-100 rounded">
+        {{ bio.autor.nom }} {{ bio.autor.cognoms }} (<a href="mailto:{{ bio.autor.email }}" class="text-blue-500 hover:underline">{{ bio.autor.email }}</a>)
+      </p>
+    </div>
+    
+    <!-- Camp per a tags (separats per comes) -->
+    <div class="mb-4">
+      <label for="tags" class="block text-gray-700 font-bold mb-2">Tags (separats per comes):</label>
+      {# Utilitzem el filtre default i join per evitar l'expressió ternària #}
+      <input id="tags" name="tags" type="text" value="{{ (bio.tags | default([])) | join(', ') }}" class="shadow border rounded w-full py-2 px-3 text-gray-700">
+    </div>
+    
+    <!-- Secció per a imatges: només es poden esborrar -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold mb-2">Imatges:</label>
+      {% if bio.imatges and bio.imatges.length > 0 %}
+        <div class="grid grid-cols-3 gap-4">
+          {% for imatge in bio.imatges %}
+            <div class="relative">
+              <img class="w-full h-32 object-cover rounded" src="{{ imatge }}" alt="Imatge de la bio">
+              <label class="absolute top-0 right-0 bg-red-600 text-white px-2 py-1 text-xs rounded cursor-pointer">
+                Esborra
+                <input type="checkbox" name="removeImatges[]" value="{{ loop.index0 }}" class="hidden">
+              </label>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>No hi ha imatges per mostrar.</p>
+      {% endif %}
+    </div>
+    
+    <div class="flex items-center justify-center mt-6">
+      <button type="submit" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded">
+        Desa els canvis
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

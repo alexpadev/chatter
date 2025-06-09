@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 my-8">
+  <div class="max-w-3xl w-full bg-white p-8 rounded-lg shadow-lg">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
+      <a href="/auth/logout" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded transition duration-300">
+        Logout
+      </a>
+    </div>
+    <p class="text-xl text-gray-700">Welcome, {{ user.email }}</p>
+    <a href="/auth/password" class="text-blue-500 underline hover:text-blue-700">Change Password</a>
+  </div>
+</div>
+{% endblock %}

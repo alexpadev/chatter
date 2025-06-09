@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="max-w-xl mx-auto mt-10">
+  <form method="POST" action="http://localhost:3000/users/update/{{ usuari.id }}" enctype="multipart/form-data"
+        class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    
+    <p class="text-gray-700 font-bold text-xl mt-2 mb-4">UPDATE FORM</p>
+
+    <div class="mb-8 text-center">
+      <label class="block text-gray-700 text-sm font-bold mb-2">Avatar</label>
+      <img id="avatarPreview" class="w-48 h-48 mx-auto object-cover" 
+           src="{% if usuari.avatarReal %}data:image/png;base64,{{ usuari.avatarReal }}{% else %}/media/default.png{% endif %}"/>
+    
+      <input id="avatarInput" name="avatar" type="file" accept="image/png" 
+             class="mt-3 block mx-auto text-sm text-gray-700 border rounded px-2 py-1 cursor-pointer">
+      <input type="hidden" id="avatarBase64" name="avatarBase64">
+      
+      <div class="mt-4">
+        <label for="removeAvatar" class="inline-flex items-center">
+          <input type="checkbox" id="removeAvatar" name="removeAvatar" class="mr-2">
+          <span class="text-gray-700">Remove Avatar</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="nom" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+        <input id="nom" name="nom" type="text" value="{{ usuari.nom }}" 
+               class="shadow border rounded w-full py-2 px-3 text-gray-700">
+      </div>
+      
+      <div>
+        <label for="cognoms" class="block text-gray-700 text-sm font-bold mb-2">Surname</label>
+        <input id="cognoms" name="cognoms" type="text" value="{{ usuari.cognoms }}" 
+               class="shadow border rounded w-full py-2 px-3 text-gray-700">
+      </div>
+      
+      <div>
+        <label for="contrasenya" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+        <input id="contrasenya" name="contrasenya" type="password" placeholder="Enter new password" 
+               class="shadow border rounded w-full py-2 px-3 text-gray-700">
+      </div>
+      
+      <div>
+        <label for="data_naixement" class="block text-gray-700 text-sm font-bold mb-2">Date of Birth</label>
+        <input id="data_naixement" name="data_naixement" type="date" 
+               value="{{ (usuari.data_naixement).toLocaleDateString('en-CA') }}" 
+               class="shadow border rounded w-full py-2 px-3 text-gray-700">
+      </div>
+      
+      <div class="col-span-2">
+        <label for="descripcio" class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+        <textarea id="descripcio" name="descripcio" 
+                  class="shadow border rounded w-full py-2 px-3 text-gray-700">{{ usuari.descripcio }}</textarea>
+      </div>
+      
+      <div class="col-span-2">
+        <label for="idiomes" class="block text-gray-700 text-sm font-bold mb-2">Languages</label>
+        <input id="idiomes" name="idiomes" type="text" value="{{ (usuari.idiomes).join(', ') }}" 
+               class="shadow border rounded w-full py-2 px-3 text-gray-700">
+      </div>
+    </div>
+
+    <div class="flex items-center justify-center mt-4">
+      <button type="submit" class="bg-gray-700 hover:bg-gray-800 text-white font-bold transition py-2 px-4 rounded w-full">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+  const avatarInput = document.getElementById('avatarInput');
+  const avatarPreview = document.getElementById('avatarPreview');
+
+  avatarInput.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = function() {
+        avatarPreview.src = reader.result;
+      }
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
+{% endblock %}
