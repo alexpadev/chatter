@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  chatter:
+    build:
+      context: ./chatter
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "3000:3000"
+    volumes:
+      - ./chatter:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
